@@ -1,5 +1,7 @@
 module WebApp
 
+using Revise
+
 #=
 
 
@@ -8,12 +10,12 @@ cd("WebApp")
 using Genie
 Genie.newapp_mvc("CopernicusData")
 
-* Modify db/connections.yaml
+* MODIFY db/connections.yaml
 
 include(joinpath("config", "initializers", "searchlight.jl"))
 Genie.newresource("product")
 
-* Modify db/migrations/..._create_table_"name".jl with 1
+* MODIFY db/migrations/..._create_table_"name".jl WITH 1
 
 SearchLight.Migration.create_migrations_table()
 SearchLight.Migration.status()
@@ -133,9 +135,8 @@ column( :type, :string )
 
 
 #= 2
-type::String = "Product"
-  uuid::String = ""
-  relpassnumber::Int = 0 #Nullable
+uuid::String = ""
+  relpassnumber::Int64 = 0 #Nullable
   relpassdirection::String = "" #Nullable
   filename::String = ""
   instrumentname::String = ""
@@ -149,7 +150,7 @@ type::String = "Product"
   sensoroperationalmode::String = "" #Nullable
   beginposition::String = ""
   procfacilityname::String = "" #Nullable
-  orbitnumber::Int = 0
+  orbitnumber::Int64 = 0
   mode::String = "" #Nullable
   platformname::String = ""
   producttype::String = ""
@@ -157,8 +158,8 @@ type::String = "Product"
   format::String = ""
   passdirection::String = "" #Nullable
   procfacilityorg::String = "" #Nullable
-  relativeorbitnumber::Int = 0
-  pduduration::Int = 0 #Nullable
+  relativeorbitnumber::Int64 = 0
+  pduduration::Int64 = 0 #Nullable
   platformidentifier::String = ""
   gmlfootprint::String = ""
   endposition::String = ""
@@ -166,55 +167,55 @@ type::String = "Product"
   onlinequalitycheck::String = ""
   processingname::String = "" #Nullable
   identifier::String = ""
-  passnumber::Int = 0 #Nullable
-  pdualongtrackcoord::Int = 0 #Nullable
+  passnumber::Int64 = 0 #Nullable
+  pdualongtrackcoord::Int64 = 0 #Nullable
   instrumentshortname::String = ""
   processinglevel::String = "" #Nullable
-  cloudcoverpercentage::Real = 0.0 #Nullable
-  lrmpercentage::Int = 0 #Nullable
-  openseapercentage::Int = 0 #Nullable
-  landpercentage::Int = 0 #Nullable
-  sarpercentage::Int = 0 #Nullable
-  closedseapercentage::Int = 0 #Nullable
-  continentalicepercentage::Int = 0 #Nullable
-  nbfire::Int = 0 #Nullable
+  cloudcoverpercentage::Float64 = 0.0 #Nullable
+  lrmpercentage::Int64 = 0 #Nullable
+  openseapercentage::Int64 = 0 #Nullable
+  landpercentage::Int64 = 0 #Nullable
+  sarpercentage::Int64 = 0 #Nullable
+  closedseapercentage::Int64 = 0 #Nullable
+  continentalicepercentage::Int64 = 0 #Nullable
+  nbfire::Int64 = 0 #Nullable
   lastpassdirection::String = "" #Nullable
-  lastrelpassnumber::Int = 0 #Nullable
+  lastrelpassnumber::Int64 = 0 #Nullable
   lastrelorbitdirection::String = "" #Nullable
   lastorbitdirection::String = "" #Nullable
-  lastrelativeorbitnumber::Int = 0 #Nullable
-  lastpassnumber::Int = 0 #Nullable
+  lastrelativeorbitnumber::Int64 = 0 #Nullable
+  lastpassnumber::Int64 = 0 #Nullable
   lastrelpassdirection::String = "" #Nullable
-  lastorbitnumber::Int = 0 #Nullable
+  lastorbitnumber::Int64 = 0 #Nullable
   pdutileid::String = "" #Nullable
   productclass::String = "" #Nullable
   polarisationmode::String = "" #Nullable
   status::String = "" #Nullable
-  slicenumber::Int = 0 #Nullable
-  missiondatatakeid::Int = 0 #Nullable
+  slicenumber::Int64 = 0 #Nullable
+  missiondatatakeid::Int64 = 0 #Nullable
   swathidentifier::String = "" #Nullable
   acquisitiontype::String = "" #Nullable
   productconsolidation::String = "" #Nullable
-  unclassifiedpercentage::Real = 0.0 #Nullable
+  unclassifiedpercentage::Float64 = 0.0 #Nullable
   s2datatakeid::String = "" #Nullable
   granuleidentifier::String = "" #Nullable
   level1cpdiidentifier::String = "" #Nullable
-  vegetationpercentage::Real = 0.0 #Nullable
-  notvegetatedpercentage::Real = 0.0 #Nullable
-  processingbaseline::Real = 0.0 #Nullable
-  mediumprobacloudspercentage::Real = 0.0 #Nullable
+  vegetationpercentage::Float64 = 0.0 #Nullable
+  notvegetatedpercentage::Float64 = 0.0 #Nullable
+  processingbaseline::Float64 = 0.0 #Nullable
+  mediumprobacloudspercentage::Float64 = 0.0 #Nullable
   datastripidentifier::String = "" #Nullable
   generationdate::String = "" #Nullable
-  illuminationzenithangle::Real = 0.0 #Nullable
+  illuminationzenithangle::Float64 = 0.0 #Nullable
   platformserialidentifier::String = "" #Nullable
-  waterpercentage::Real = 0.0 #Nullable
-  highprobacloudspercentage::Real = 0.0 #Nullable
-  illuminationazimuthangle::Real = 0.0 #Nullable
-  snowicepercentage::Real = 0.0 #Nullable
+  waterpercentage::Float64 = 0.0 #Nullable
+  highprobacloudspercentage::Float64 = 0.0 #Nullable
+  illuminationazimuthangle::Float64 = 0.0 #Nullable
+  snowicepercentage::Float64 = 0.0 #Nullable
   hv_order_tileid::String = "" #Nullable
   tileid::String = "" #Nullable
   datatakesensingstart::String = "" #Nullable
-  leapsecond::Int = 0 #Nullable
+  leapsecond::Int64 = 0 #Nullable
   leapSecondOccurrence::String = "" #Nullable
 =#
 
@@ -223,20 +224,21 @@ type::String = "Product"
 #=
 using SearchLight, Products
 using CSV
+using Revise
 
 Base.convert(::Type{String}, _::Missing) = ""
-Base.convert(::Type{Int}, _::Missing) = 0
-Base.convert(::Type{Real}, _::Missing) = 0.0
-Base.convert(::Type{Int}, s::String) = parse(Int, s)
-Base.convert(::Type{Real}, s::String) = parse(Real, s)
+Base.convert(::Type{Int64}, _::Missing) = 0
+Base.convert(::Type{Float64}, _::Missing) = 0.0
+Base.convert(::Type{Int64}, s::String) = parse(Int64, s)
+Base.convert(::Type{Float64}, s::String) = parse(Float64, s)
 
 function seed()
-  for row in CSV.Rows(joinpath(@__DIR__, "data.csv"), limit = 1_000)
+  for row in CSV.Rows( joinpath(@__DIR__, "data.csv"), limit = 1_000 )
     p = Product()
 
-    p.type = row.type
+    println("0")
     p.uuid = row.uuid
-    p.relpassnumber = row.relpassnumber
+    #p.relpassnumber = row.relpassnumber
     p.relpassdirection = row.relpassdirection
     p.filename = row.filename
     p.instrumentname = row.instrumentname
@@ -247,54 +249,60 @@ function seed()
     p.relorbitdir = row.relorbitdir
     p.ingestiondate = row.ingestiondate
     p.ecmwf = row.ecmwf
+    println("1")
     p.sensoroperationalmode = row.sensoroperationalmode
     p.beginposition = row.beginposition
     p.procfacilityname = row.procfacilityname
-    p.orbitnumber = row.orbitnumber
+    #p.orbitnumber = row.orbitnumber
     p.mode = row.mode
     p.platformname = row.platformname
     p.producttype = row.producttype
+    println("2")
     p.orbitdirection = row.orbitdirection
     p.format = row.format
     p.passdirection = row.passdirection
     p.procfacilityorg = row.procfacilityorg
-    p.relativeorbitnumber = row.relativeorbitnumber 
-    p.pduduration = row.pduduration
+    #p.relativeorbitnumber = row.relativeorbitnumber 
+    #p.pduduration = row.pduduration
     p.platformidentifier = row.platformidentifier
+    println("3")
     p.gmlfootprint = row.gmlfootprint
     p.endposition = row.endposition
     p.creationdate = row.creationdate
     p.onlinequalitycheck = row.onlinequalitycheck
     p.processingname = row.processingname
     p.identifier = row.identifier
-    p.passnumber = row.passnumber
-    p.pdualongtrackcoord = row.pdualongtrackcoord
+    #p.passnumber = row.passnumber
+    println("4")
+    #p.pdualongtrackcoord = row.pdualongtrackcoord
     p.instrumentshortname = row.instrumentshortname
     p.processinglevel = row.processinglevel
-    p.cloudcoverpercentage = row.cloudcoverpercentage
-    p.lrmpercentage = row.lrmpercentage
-    p.openseapercentage = row.openseapercentage
-    p.landpercentage = row.landpercentage
-    p.sarpercentage = row.sarpercentage
-    p.closedseapercentage = row.closedseapercentage
-    p.continentalicepercentage = row.continentalicepercentage
-    p.nbfire = row.nbfire
+    #p.cloudcoverpercentage = row.cloudcoverpercentage
+    #p.lrmpercentage = row.lrmpercentage
+    #p.openseapercentage = row.openseapercentage
+    #p.landpercentage = row.landpercentage
+    #p.sarpercentage = row.sarpercentage
+    #p.closedseapercentage = row.closedseapercentage
+    #p.continentalicepercentage = row.continentalicepercentage
+    #p.nbfire = row.nbfire
+    println("5")
     p.lastpassdirection = row.lastpassdirection
-    p.lastrelpassnumber = row.lastrelpassnumber
+    #p.lastrelpassnumber = row.lastrelpassnumber
     p.lastrelorbitdirection = row.lastrelorbitdirection
     p.lastorbitdirection = row.lastorbitdirection
-    p.lastrelativeorbitnumber = row.lastrelativeorbitnumber
-    p.lastpassnumber = row.lastpassnumber
+    #p.lastrelativeorbitnumber = row.lastrelativeorbitnumber
+    #p.lastpassnumber = row.lastpassnumber
     p.lastrelpassdirection = row.lastrelpassdirection
-    p.lastorbitnumber = row.lastorbitnumber
+    #p.lastorbitnumber = row.lastorbitnumber
     p.pdutileid = row.pdutileid
     p.productclass = row.productclass
     p.polarisationmode = row.polarisationmode
     p.status = row.status
-    p.slicenumber = row.slicenumber
-    p.missiondatatakeid = row.missiondatatakeid
+    #p.slicenumber = row.slicenumber
+    #p.missiondatatakeid = row.missiondatatakeid
     p.swathidentifier = row.swathidentifier
     p.acquisitiontype = row.acquisitiontype
+    println("6")
     p.productconsolidation = row.productconsolidation
     p.unclassifiedpercentage = row.unclassifiedpercentage
     p.s2datatakeid = row.s2datatakeid
@@ -309,13 +317,14 @@ function seed()
     p.illuminationzenithangle = row.illuminationzenithangle
     p.platformserialidentifier = row.platformserialidentifier
     p.waterpercentage = row.waterpercentage
+    println("7")
     p.highprobacloudspercentage = row.highprobacloudspercentage
     p.illuminationazimuthangle = row.illuminationazimuthangle
     p.snowicepercentage = row.snowicepercentage
     p.hv_order_tileid = row.hv_order_tileid
     p.tileid = row.tileid
     p.datatakesensingstart = row.datatakesensingstart
-    p.leapsecond = row.leapsecond
+    #p.leapsecond = row.leapsecond
     p.leapSecondOccurrence = row.leapSecondOccurrence
 
     save(p)

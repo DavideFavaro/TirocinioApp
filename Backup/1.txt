@@ -1,0 +1,175 @@
+column( :uuid, :string )
+      column( :relpassnumber, :integer ) #Nullable
+      column( :relpassdirection, :string ) #Nullable
+      column( :filename, :string )
+      column( :instrumentname, :string )
+      column( :timeliness, :string ) #Nullable
+      column( :footprint, :string )
+      column( :size, :string )
+      column( :productlevel, :string ) #Nullable
+      column( :relorbitdir, :string ) #Nullable
+      column( :ingestiondate, :string )
+      column( :ecmwf, :string ) #Nullable
+      column( :sensoroperationalmode, :string ) #Nullable
+      column( :beginposition, :string )
+      column( :procfacilityname, :string ) #Nullable
+      column( :orbitnumber, :integer )
+      column( :mode, :string ) #Nullable
+      column( :platformname, :string )
+      column( :producttype, :string )
+      column( :orbitdirection, :string )
+      column( :format, :string )
+      column( :passdirection, :string ) #Nullable
+      column( :procfacilityorg, :string ) #Nullable
+      column( :relativeorbitnumber, :integer )
+      column( :pduduration, :integer ) #Nullable
+      column( :platformidentifier, :string )
+      column( :gmlfootprint, :string )
+      column( :endposition, :string )
+      column( :creationdate, :string ) #Nullable
+      column( :onlinequalitycheck, :string )
+      column( :processingname, :string ) #Nullable
+      column( :identifier, :string )
+      column( :passnumber, :integer ) #Nullable
+      column( :pdualongtrackcoord, :integer ) #Nullable
+      column( :instrumentshortname, :string )
+      column( :processinglevel, :string ) #Nullable
+      column( :cloudcoverpercentage, :float ) #Nullable
+      column( :lrmpercentage, :integer ) #Nullable
+      column( :openseapercentage, :integer ) #Nullable
+      column( :landpercentage, :integer ) #Nullable
+      column( :sarpercentage, :integer ) #Nullable
+      column( :closedseapercentage, :integer ) #Nullable
+      column( :continentalicepercentage, :integer ) #Nullable
+      column( :nbfire, :integer ) #Nullable
+      column( :lastpassdirection, :string ) #Nullable
+      column( :lastrelpassnumber, :integer ) #Nullable
+      column( :lastrelorbitdirection, :string ) #Nullable
+      column( :lastorbitdirection, :string ) #Nullable
+      column( :lastrelativeorbitnumber, :integer ) #Nullable
+      column( :lastpassnumber, :integer ) #Nullable
+      column( :lastrelpassdirection, :string ) #Nullable
+      column( :lastorbitnumber, :integer ) #Nullable
+      column( :pdutileid, :string ) #Nullable
+      column( :productclass, :string ) #Nullable
+      column( :polarisationmode, :string ) #Nullable
+      column( :status, :string ) #Nullable
+      column( :slicenumber, :integer ) #Nullable
+      column( :missiondatatakeid, :integer ) #Nullable
+      column( :swathidentifier, :string ) #Nullable
+      column( :acquisitiontype, :string ) #Nullable
+      column( :productconsolidation, :string ) #Nullable
+      column( :unclassifiedpercentage, :float ) #Nullable
+      column( :s2datatakeid, :string ) #Nullable
+      column( :granuleidentifier, :string ) #Nullable
+      column( :level1cpdiidentifier, :string ) #Nullable
+      column( :vegetationpercentage, :float ) #Nullable
+      column( :notvegetatedpercentage, :float ) #Nullable
+      column( :processingbaseline, :float ) #Nullable
+      column( :mediumprobacloudspercentage, :float ) #Nullable
+      column( :datastripidentifier, :string ) #Nullable
+      column( :generationdate, :string ) #Nullable
+      column( :illuminationzenithangle, :float ) #Nullable
+      column( :platformserialidentifier, :string ) #Nullable
+      column( :waterpercentage, :float ) #Nullable
+      column( :highprobacloudspercentage, :float ) #Nullable
+      column( :illuminationazimuthangle, :float ) #Nullable
+      column( :snowicepercentage, :float ) #Nullable
+      column( :hv_order_tileid, :string ) #Nullable
+      column( :tileid, :string ) #Nullable
+      column( :datatakesensingstart, :string ) #Nullable
+      column( :leapsecond, :integer ) #Nullable
+      column( :leapSecondOccurrence, :string ) #Nullable
+
+  add_index(:products, :uuid)
+  add_index(:products, :filename)
+  add_index(:products, :platformname)
+  add_index(:products, :producttype)
+
+
+
+  
+
+
+column( :uuid, :string, limit = 100 )
+      column( :relpassnumber, :integer, limit = 100 ) #Nullable
+      column( :relpassdirection, :string, limit = 1000 ) #Nullable
+      column( :filename, :string, limit = 300 )
+      column( :instrumentname, :string, limit = 300 )
+      column( :timeliness, :string, limit = 100 ) #Nullable
+      column( :footprint, :string, limit = 3_000 )
+      column( :size, :string, limit = 100 )
+      column( :productlevel, :string, limit = 100 ) #Nullable
+      column( :relorbitdir, :string, limit = 100 ) #Nullable
+      column( :ingestiondate, :string, limit = 100 )
+      column( :ecmwf, :string, limit = 100 ) #Nullable
+      column( :sensoroperationalmode, :string, limit = 100 ) #Nullable
+      column( :beginposition, :string, limit = 100 )
+      column( :procfacilityname, :string, limit = 100 ) #Nullable
+      column( :orbitnumber, :integer, limit = 100 )
+      column( :mode, :string, limit = 100 ) #Nullable
+      column( :platformname, :string, limit = 300 )
+      column( :producttype, :string, limit = 100 )
+      column( :orbitdirection, :string, limit = 100 )
+      column( :format, :string, limit = 100 )
+      column( :passdirection, :string, limit = 100 ) #Nullable
+      column( :procfacilityorg, :string, limit = 100 ) #Nullable
+      column( :relativeorbitnumber, :integer, limit = 100 )
+      column( :pduduration, :integer, limit = 100 ) #Nullable
+      column( :platformidentifier, :string, limit = 100 )
+      column( :gmlfootprint, :string, limit = 3_000 )
+      column( :endposition, :string, limit = 100 )
+      column( :creationdate, :string, limit = 100 ) #Nullable
+      column( :onlinequalitycheck, :string, limit = 100 )
+      column( :processingname, :string, limit = 300 ) #Nullable
+      column( :identifier, :string, limit = 300 )
+      column( :passnumber, :integer, limit = 100 ) #Nullable
+      column( :pdualongtrackcoord, :integer, limit = 3_000 ) #Nullable
+      column( :instrumentshortname, :string, limit = 100 )
+      column( :processinglevel, :string, limit = 100 ) #Nullable
+      column( :cloudcoverpercentage, :float, limit = 100 ) #Nullable
+      column( :lrmpercentage, :integer, limit = 100 ) #Nullable
+      column( :openseapercentage, :integer, limit = 100 ) #Nullable
+      column( :landpercentage, :integer, limit = 100 ) #Nullable
+      column( :sarpercentage, :integer, limit = 100 ) #Nullable
+      column( :closedseapercentage, :integer, limit = 100 ) #Nullable
+      column( :continentalicepercentage, :integer, limit = 100 ) #Nullable
+      column( :nbfire, :integer, limit = 100 ) #Nullable
+      column( :lastpassdirection, :string, limit = 100 ) #Nullable
+      column( :lastrelpassnumber, :integer, limit = 100 ) #Nullable
+      column( :lastrelorbitdirection, :string, limit = 100 ) #Nullable
+      column( :lastorbitdirection, :string, limit = 100 ) #Nullable
+      column( :lastrelativeorbitnumber, :integer, limit = 100 ) #Nullable
+      column( :lastpassnumber, :integer, limit = 100 ) #Nullable
+      column( :lastrelpassdirection, :string, limit = 100 ) #Nullable
+      column( :lastorbitnumber, :integer, limit = 100 ) #Nullable
+      column( :pdutileid, :string, limit = 3_000 ) #Nullable
+      column( :productclass, :string, limit = 300 ) #Nullable
+      column( :polarisationmode, :string, limit = 100 ) #Nullable
+      column( :status, :string, limit = 300 ) #Nullable
+      column( :slicenumber, :integer, limit = 100 ) #Nullable
+      column( :missiondatatakeid, :integer, limit = 300 ) #Nullable
+      column( :swathidentifier, :string, limit = 300 ) #Nullable
+      column( :acquisitiontype, :string, limit = 100 ) #Nullable
+      column( :productconsolidation, :string, limit = 100 ) #Nullable
+      column( :unclassifiedpercentage, :float, limit = 100 ) #Nullable
+      column( :s2datatakeid, :string, limit = 300 ) #Nullable
+      column( :granuleidentifier, :string, limit = 300 ) #Nullable
+      column( :level1cpdiidentifier, :string, limit = 300 ) #Nullable
+      column( :vegetationpercentage, :float, limit = 100 ) #Nullable
+      column( :notvegetatedpercentage, :float, limit = 100 ) #Nullable
+      column( :processingbaseline, :float, limit = 100 ) #Nullable
+      column( :mediumprobacloudspercentage, :float, limit = 100 ) #Nullable
+      column( :datastripidentifier, :string, limit = 300 ) #Nullable
+      column( :generationdate, :string, limit = 100 ) #Nullable
+      column( :illuminationzenithangle, :float, limit = 100 ) #Nullable
+      column( :platformserialidentifier, :string, limit = 300 ) #Nullable
+      column( :waterpercentage, :float, limit = 100 ) #Nullable
+      column( :highprobacloudspercentage, :float, limit = 100 ) #Nullable
+      column( :illuminationazimuthangle, :float, limit = 100 ) #Nullable
+      column( :snowicepercentage, :float, limit = 100 ) #Nullable
+      column( :hv_order_tileid, :string, limit = 300 ) #Nullable
+      column( :tileid, :string, limit = 300 ) #Nullable
+      column( :datatakesensingstart, :string, limit = 100 ) #Nullable
+      column( :leapsecond, :integer, limit = 100 ) #Nullable
+      column( :leapSecondOccurrence, :string, limit = 100 ) #Nullable
