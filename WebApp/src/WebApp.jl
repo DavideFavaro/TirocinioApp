@@ -1,17 +1,17 @@
 module WebApp
 
-using Revise
-
 #=
 
 
 cd("WebApp")
 ]activate .
+using Revise
 using Genie
 Genie.newapp_mvc("CopernicusData")
 
 * MODIFY db/connections.yaml
 
+Genie.Generator.write_secrets_file()
 include(joinpath("config", "initializers", "searchlight.jl"))
 Genie.newresource("product")
 

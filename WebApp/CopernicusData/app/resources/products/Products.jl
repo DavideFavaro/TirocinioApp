@@ -8,7 +8,7 @@ export Product
 @kwdef mutable struct Product <: AbstractModel
   id::DbId = DbId()
   uuid::String = ""
-  relpassnumber::String = "" #Nullable
+  relpassnumber::Int = 0 #Nullable
   relpassdirection::String = "" #Nullable
   filename::String = ""
   instrumentname::String = ""

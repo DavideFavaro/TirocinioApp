@@ -1,1 +1,1 @@
-"C:\Users\DAVIDE-FAVARO\AppData\Local\Programs\Julia-1.6.2\bin\julia" --color=yes --depwarn=no --project=@. -q -- "%~dp0..\bootstrap.jl" -r %*
+"C:\Users\Lenovo\AppData\Local\Programs\Julia-1.6.1\bin\julia" --color=yes --depwarn=no --project=@. -q -- "%~dp0..\bootstrap.jl" -r %*

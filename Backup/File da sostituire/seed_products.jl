@@ -2,19 +2,19 @@ using SearchLight, Products
 using CSV
 using Revise
 
-Base.convert(::Type{String}, _::Missing) = ""
-Base.convert(::Type{Int64}, _::Missing) = 0
+Base.convert(::Type{String}, _::Missing ) = ""
+Base.convert(::Type{Int}, _::Missing ) = 0
 Base.convert(::Type{Float64}, _::Missing) = 0.0
-Base.convert(::Type{Int64}, s::String) = parse(Int64, s)
-Base.convert(::Type{Float64}, s::String) = parse(Float64, s)
+Base.convert(::Type{Int}, s::AbstractString ) = parse( Int64, s )
+Base.convert(::Type{Float64}, s::AbstractString ) = parse( Float64, s )
 
 function seed()
-  for row in CSV.Rows( joinpath(@__DIR__, "data.csv"), limit = 1_000 )
+  for row in CSV.Rows( joinpath(@__DIR__, "data.csv"), limit = 10 )
     p = Product()
 
     println("0")
     p.uuid = row.uuid
-    #p.relpassnumber = row.relpassnumber
+    p.relpassnumber = row.relpassnumber
     p.relpassdirection = row.relpassdirection
     p.filename = row.filename
     p.instrumentname = row.instrumentname

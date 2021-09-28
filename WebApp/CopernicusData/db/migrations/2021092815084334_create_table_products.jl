@@ -7,7 +7,7 @@ function up()
     [
       primary_key()
       column( :uuid, :string, limit = 100 )
-      column( :relpassnumber, :string, limit = 100 ) #Nullable
+      column( :relpassnumber, :integer, limit = 100 ) #Nullable
       column( :relpassdirection, :string, limit = 1000 ) #Nullable
       column( :filename, :string, limit = 300 )
       column( :instrumentname, :string, limit = 300 )
@@ -90,7 +90,7 @@ function up()
       column( :leapSecondOccurrence, :string, limit = 100 ) #Nullable
     ]
   end
-  
+
   add_index(:products, :uuid)
   add_index(:products, :filename)
   add_index(:products, :platformname)
