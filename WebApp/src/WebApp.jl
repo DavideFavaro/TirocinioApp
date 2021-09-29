@@ -4,6 +4,7 @@ module WebApp
 
 
 cd("WebApp")
+cd("WebApp\\CopernicusData")
 ]activate .
 using Revise
 using Genie
