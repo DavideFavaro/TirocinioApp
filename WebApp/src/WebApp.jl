@@ -1,10 +1,20 @@
 module WebApp
 
 #=
-
-
-cd("WebApp")
 cd("WebApp\\CopernicusData")
+]activate .
+using Revise
+using Genie
+using Stipple
+Genie.loadapp(".")
+up()
+=#
+
+
+
+
+#=
+cd("WebApp")
 ]activate .
 using Revise
 using Genie
