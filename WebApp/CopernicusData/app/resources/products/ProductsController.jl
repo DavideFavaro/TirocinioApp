@@ -4,7 +4,7 @@ using CSV, DataFrames, Genie, Genie.Renderer.Html, SearchLight, Stipple, Stipple
 
 sPage = ""
 
-data = CSV.read( split( @__DIR__, "app" )[1] * "db\\seeds\\data.csv", DataFrame, limit=300 )
+data = CSV.read("F:\\00_julia\\000_w\\11_davide\\git_clone_tirocionioapp\\TirocinioApp\\WebApp\\CopernicusData\\db\\seeds\\data.csv", DataFrame)#, limit=300 )
 
 dfs = [ filter( row -> row.platformname == "Sentinel-$i", data ) for i in 1:3 ]
 
@@ -15,10 +15,10 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
   data_page::DataTablePagination = DataTablePagination(rows_per_page=33)
 end
 
-model = Stipple.init(ProductArray())
+model = Stipple.init(ProductTable())
 
 function ui()
-  global model = Stipple.init(ProductArray())
+  global model = Stipple.init(ProductTable())
   page(
     vm(ProductsController.model), class="container", [
 
