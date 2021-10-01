@@ -7,7 +7,7 @@ using CSV, DataFrames
 sPage = ""
 
 # Read data from CSV
-data = CSV.read( rsplit( @__DIR__, "app", limit=2 )[1] * "db\\seeds\\data.csv", DataFrame )
+data = CSV.read( rsplit( @__DIR__, "app", limit=2 )[1] * "db\\seeds\\data.csv", DataFrame, limit=9000 )
 
 # Divide the dataframe in subsets based on :platformname 
 sats = unique(data[:, :platformname])
@@ -29,20 +29,22 @@ end
 #Model definition
 Base.@kwdef mutable struct ProductTable <: ReactiveModel
 
-#Attributes tied to the creation of graphs
+#Attributes tied to the creation of plot
   features::R{ Vector{String} } = [
-    "size", #V
-    "productlevel", #V
-    "instrumentname", #V
+    "platformname", #Per il testing
+    "size", 
+    "productlevel",
+    "instrumentname",
+    "creationdate",
+    "cloudcoverpercentage"
+    #=,
     "polarisationmode",
     "ingestiondate",
     "beginposition",
     "endposition",
-    "creationdate", #V
     "generationdate",
     "illuminationzenithangle",
     "illuminationazimuthangle",
-    "cloudcoverpercentage", #V
     "lrmpercentage",
     "openseapercentage",
     "landpercentage",
@@ -57,6 +59,7 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
     "snowicepercentage",
     "leapsecond",
     "leapSecondOccurrence"
+    =#
   ]
   xfeature::R{String} = ""
   yfeature::R{String} = ""
@@ -71,22 +74,47 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
 end
 
 
-# Model initialization
+#function rselect( fld, opts, model, attr, val  )
+#  a = getproperty( model, fld )
+#  println( "a: $a" )
+#  Html.select( a, options=getproperty( model, opts ) )
+#  b = getproperty( model, fld )
+#  println( "b: $b" )
+#  if b != a
+#    println("A diverso da B")
+#    index = findall( x -> x == getproperty( model, fld ), getproperty( model, opt ) )[1]
+#    println( "index: $index" )
+#    println( "dfs[$index][1:3]: $(val[index ][1:3])" )
+#    newtable = DataTable( DataFrames.select( val[index], intersect( model.features[], names(val[index]) ) ) )
+#    setproperty!( model, attr, newtable )
+#  else
+#    println()
+#    println("ERRORE")
+#    println()
+#  end
+#end
+
+
 model = Stipple.init(ProductTable())
 
 
-# Events handling
-Stipple.on( model.sat_table ) do _
-  # When "sat_table" value changes, find the index of the matching value in sats 
-  index = findall( x -> x == model.sat_table[], sats )[1]
-  # Change the table shown in the ui with the one of index "index" in the vector of tables
-  model.products_table[] = DataTable( DataFrames.select( dfs[index], intersect( model.features[], names(dfs[index]) ) ) )
-end
 
 
 # Ui definition
 function ui()
   global model = Stipple.init(ProductTable())
+
+
+  # Events handling
+  on( model.sat_table ) do _ 
+    println( model.sat_table )
+    # When "sat_table" value changes, find the index of the matching value in sats 
+    index = findfirst( x -> x == model.sat_table[], sats )
+    # Change the table shown in the ui with the one of index "index" in the vector of tables
+    model.products_table[] = DataTable( DataFrames.select( dfs[index], intersect( model.features[], names(dfs[index]) ) ) )
+  end
+
+
   page(
     vm(ProductsController.model), class="container", [
       heading("Copernicus Data")
@@ -95,8 +123,7 @@ function ui()
       row([
         cell( class = "st-module", [
           h6("Satelite")
-          Html.select( :sat_table, options=:satellites )
-          println( model.sat_table[] )
+          Html.select( @data(:sat_table), options=:satellites )
         ])
 
         cell( class = "st-module", [
@@ -113,7 +140,7 @@ function ui()
 
       row([
         cell( class = "st-module", [
-          h3("Sentinel data")
+          h6("Sentinel data")
           Stipple.table( :products_table; pagination=:data_page )
         ])
       ])
