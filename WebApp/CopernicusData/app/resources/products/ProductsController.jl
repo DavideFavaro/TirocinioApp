@@ -7,7 +7,7 @@ using CSV, DataFrames
 sPage = ""
 
 # Read data from CSV
-data = CSV.read( split( @__DIR__, "app" )[1] * "db\\seeds\\data.csv", DataFrame )
+data = CSV.read( rsplit( @__DIR__, "app", limit=2 )[1] * "db\\seeds\\data.csv", DataFrame )
 
 # Divide the dataframe in subsets based on :platformname 
 sats = unique(data[:, :platformname])
@@ -31,18 +31,18 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
 
 #Attributes tied to the creation of graphs
   features::R{ Vector{String} } = [
-    "size",
-    "productlevel",
-    "instrumentname",
+    "size", #V
+    "productlevel", #V
+    "instrumentname", #V
     "polarisationmode",
     "ingestiondate",
     "beginposition",
     "endposition",
-    "creationdate",
+    "creationdate", #V
     "generationdate",
     "illuminationzenithangle",
     "illuminationazimuthangle",
-    "cloudcoverpercentage",
+    "cloudcoverpercentage", #V
     "lrmpercentage",
     "openseapercentage",
     "landpercentage",
@@ -76,7 +76,7 @@ model = Stipple.init(ProductTable())
 
 
 # Events handling
-on( model.sat_table ) do _
+Stipple.on( model.sat_table ) do _
   # When "sat_table" value changes, find the index of the matching value in sats 
   index = findall( x -> x == model.sat_table[], sats )[1]
   # Change the table shown in the ui with the one of index "index" in the vector of tables
@@ -96,6 +96,7 @@ function ui()
         cell( class = "st-module", [
           h6("Satelite")
           Html.select( :sat_table, options=:satellites )
+          println( model.sat_table[] )
         ])
 
         cell( class = "st-module", [
