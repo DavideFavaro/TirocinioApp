@@ -1,10 +1,11 @@
 using Genie.Router
+using Genie.Assets
 using ProductsController
 
-route( "/products", ProductsController.index )
+#route( "/products", ProductsController.index )
 
-route( "/Sproducts", ProductsController.s_index )
+route( "/", ProductsController.index ) 
 
-route("/") do
-  serve_static_file("welcome.html")
-end
+#route("/") do
+#  serve_static_file("welcome.html")
+#end

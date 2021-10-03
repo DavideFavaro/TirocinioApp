@@ -2,7 +2,8 @@ module WebApp
 
 #=
 cd("WebApp\\CopernicusData")
-]activate .
+using Pkg
+Pkg.activate(".")
 using Revise
 using Genie
 using Stipple

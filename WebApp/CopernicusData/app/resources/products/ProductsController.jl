@@ -4,7 +4,6 @@ using Stipple, StippleUI, StippleCharts
 using Genie, Genie.Renderer.Html, SearchLight, Products
 using CSV, DataFrames
 
-sPage = ""
 
 # Read data from CSV
 data = CSV.read( rsplit( @__DIR__, "app", limit=2 )[1] * "db\\seeds\\data.csv", DataFrame, limit=9000 )
@@ -66,6 +65,7 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
 
 # Attributes tied to the creation of a table
   # Table to be shown in the ui, its obtained selecting only the columns shared between "dfs" and "attrs"
+  dataframes::Vector{DataFrame} = dfs
   products_table::R{DataTable} = DataTable( DataFrames.select( dfs[1], intersect( features, names(dfs[1]) ) ) )
   data_page::DataTablePagination = DataTablePagination(rows_per_page=100)
   satellites::R{ Vector{String} } = sats
@@ -74,46 +74,32 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
 end
 
 
-#function rselect( fld, opts, model, attr, val  )
-#  a = getproperty( model, fld )
-#  println( "a: $a" )
-#  Html.select( a, options=getproperty( model, opts ) )
-#  b = getproperty( model, fld )
-#  println( "b: $b" )
-#  if b != a
-#    println("A diverso da B")
-#    index = findall( x -> x == getproperty( model, fld ), getproperty( model, opt ) )[1]
-#    println( "index: $index" )
-#    println( "dfs[$index][1:3]: $(val[index ][1:3])" )
-#    newtable = DataTable( DataFrames.select( val[index], intersect( model.features[], names(val[index]) ) ) )
-#    setproperty!( model, attr, newtable )
-#  else
-#    println()
-#    println("ERRORE")
-#    println()
-#  end
-#end
+global function event!( val::String, model::ProductTable )
+  println("EVENT")
+  println(val)
+  # When "sat_table" value changes, find the index of the matching value in sats 
+  index = findfirst( x -> x == val, model.satellites[] )
+  # Change the table shown in the ui with the one of index "index" in the vector of tables
+  model.products_table[] = DataTable( DataFrames.select( model.dataframes[1][index], intersect( model.features[], names( model.dataframes[1][index] ) ) ) )
+end
 
 
 model = Stipple.init(ProductTable())
-
-
-
 
 # Ui definition
 function ui()
   global model = Stipple.init(ProductTable())
 
-
   # Events handling
-  on( model.sat_table ) do _ 
-    println( model.sat_table )
-    # When "sat_table" value changes, find the index of the matching value in sats 
-    index = findfirst( x -> x == model.sat_table[], sats )
-    # Change the table shown in the ui with the one of index "index" in the vector of tables
-    model.products_table[] = DataTable( DataFrames.select( dfs[index], intersect( model.features[], names(dfs[index]) ) ) )
+  on( model.sat_table ) do val
+    @show model.sat_table
+    event!(val, model)
   end
 
+# println( model.sat_table )
+# println( length(model.sat_table.o.listeners) )
+# println( typeof(model.sat_table.o.listeners) )
+# println( typeof.(model.sat_table.o.listeners) )
 
   page(
     vm(ProductsController.model), class="container", [
@@ -123,17 +109,7 @@ function ui()
       row([
         cell( class = "st-module", [
           h6("Satelite")
-          Html.select( @data(:sat_table), options=:satellites )
-        ])
-
-        cell( class = "st-module", [
-          h6("X Axis")
-          Html.select( :xfeature, options=:features )
-        ])
-
-        cell( class = "st-module", [
-          h6("Y Axis")
-          Html.select( :yfeature, options=:features )
+          Select.select( :sat_table; options=:satellites )
         ])
       ])
 
@@ -150,16 +126,14 @@ end
 
 
 
-function s_index()
-  global sPage = ui()
-  html( :products, :s_index, oCtrl=ProductsController )
-end
-
-
-
 function index()
-  html( :products, :index, products = rand(Product) )
+  html( :products, :index, View = ProductsController.ui() )
 end
+
+
+#function index()
+#  html( :products, :index, products = rand(Product) )
+#end
 
 
 
