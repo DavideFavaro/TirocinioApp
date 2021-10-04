@@ -74,9 +74,20 @@ Base.@kwdef mutable struct ProductTable <: ReactiveModel
 end
 
 
-global function event!( val::String, model::ProductTable )
+
+
+
+
+
+model = Stipple.init(ProductTable())
+
+
+
+
+
+on( model.sat_table ) do _
   println("EVENT")
-  println(val)
+  println(model.sat_table)
   # When "sat_table" value changes, find the index of the matching value in sats 
   index = findfirst( x -> x == val, model.satellites[] )
   # Change the table shown in the ui with the one of index "index" in the vector of tables
@@ -84,32 +95,32 @@ global function event!( val::String, model::ProductTable )
 end
 
 
-model = Stipple.init(ProductTable())
+
 
 # Ui definition
 function ui()
   global model = Stipple.init(ProductTable())
 
   # Events handling
-  on( model.sat_table ) do val
-    @show model.sat_table
-    event!(val, model)
+  on( model.sat_table ) do _
+    println("EVENT")
+    println(model.sat_table)
+    # When "sat_table" value changes, find the index of the matching value in sats 
+    index = findfirst( x -> x == val, model.satellites[] )
+    # Change the table shown in the ui with the one of index "index" in the vector of tables
+    model.products_table[] = DataTable( DataFrames.select( model.dataframes[1][index], intersect( model.features[], names( model.dataframes[1][index] ) ) ) )
   end
 
-# println( model.sat_table )
-# println( length(model.sat_table.o.listeners) )
-# println( typeof(model.sat_table.o.listeners) )
-# println( typeof.(model.sat_table.o.listeners) )
 
   page(
-    vm(ProductsController.model), class="container", [
+    vm(model), class="container", [
       heading("Copernicus Data")
 
 
       row([
         cell( class = "st-module", [
           h6("Satelite")
-          Select.select( :sat_table; options=:satellites )
+          Select.select( :sat_table, options=:satellites )
         ])
       ])
 
