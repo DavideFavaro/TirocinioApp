@@ -111,7 +111,6 @@ function ui()
     model.products_table[] = DataTable( DataFrames.select( model.dataframes[1][index], intersect( model.features[], names( model.dataframes[1][index] ) ) ) )
   end
 
-
   page(
     vm(model), class="container", [
       heading("Copernicus Data")
@@ -119,8 +118,8 @@ function ui()
 
       row([
         cell( class = "st-module", [
-          h6("Satelite")
-          Select.select( :sat_table, options=:satellites )
+          h6("Satellite")
+          Selects.select( :sat_table, options=:satellites )
         ])
       ])
 
